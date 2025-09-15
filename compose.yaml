@@ -1,0 +1,14 @@
+services:
+  locust:
+    build: .
+    env_file:
+      - .env
+    environment:
+      REPORTS_DIR: /mnt/locust/reports
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./reports:/mnt/locust/reports
+      - ./specs:/mnt/locust/specs
+      - ./:/mnt/locust
+    restart: unless-stopped
