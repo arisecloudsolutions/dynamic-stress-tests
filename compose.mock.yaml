@@ -1,0 +1,30 @@
+services:
+  mock-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./tests:/app/tests
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+
+  locust:
+    build: .
+    env_file:
+      - .env
+    environment:
+      REPORTS_DIR: /mnt/locust/reports
+      OPENAPI_URL: http://mock-api:5000/openapi.json
+      BASE_URL: http://mock-api:5000
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./reports:/mnt/locust/reports
+      - ./specs:/mnt/locust/specs
+      - ./:/mnt/locust
+    depends_on:
+      - mock-api
+    restart: unless-stopped

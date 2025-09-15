@@ -1,191 +1,239 @@
-# Dynamic Stress Tests 🚀
+# Dynamic Stress Tests
 
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Docker](https://img.shields.io/badge/docker-supported-blue)
-![Locust](https://img.shields.io/badge/locust-2.30%2B-red)
-![License](https://img.shields.io/badge/license-MIT-green)
+Automated load testing framework that generates comprehensive tests from OpenAPI specifications.
 
-> **Automated Load Testing Framework with Locust** - OpenAPI-driven dynamic stress tests that scale
-
-## 🎯 Overview
-
-This framework automatically generates comprehensive load tests from OpenAPI specifications, providing:
-
-- **🔄 Dynamic Test Generation**: Auto-build requests from OpenAPI specs
-- **🔐 Flexible Authentication**: Support JWT tokens or login flows
-- **📊 Rich Reporting**: HTML, CSV, and JSON output formats
-- **🐳 Container-Ready**: Docker + Compose for local dev and CI/CD
-- **⚡ CI/CD Integration**: Ready for AWS pipelines and GitHub Actions
-- **🎛️ Multiple Scenarios**: Ramp-up, spike, soak, and error testing
-
-## 🏗️ Architecture
-
-```mermaid
-graph TB
-    A[OpenAPI Spec] --> B[Scenario Builder]
-    B --> C[Locust Engine]
-    C --> D[Target API]
-    D --> E[Reports]
-
-    F[Auth Module] --> C
-    G[Config] --> C
-
-    subgraph "Container"
-        B
-        C
-        F
-        G
-    end
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Docker & Docker Compose
-- OpenAPI specification (URL or local file)
-- Target API endpoint
-
-### 1. Setup
+## Quick Start
 
 ```bash
-git clone https://github.com/arisecloudsolutions/dynamic-stress-tests.git
+git clone <repository-url>
 cd dynamic-stress-tests
-cp .env.example .env
+make demo
 ```
 
-### 2. Configure Environment
+Open http://localhost:8089 to access the Locust web interface.
 
-Edit `.env` with your API details:
+## Commands
 
+| Command | Description |
+|---------|-------------|
+| `make demo` | Quick demo (Swagger Petstore) |
+| `make test` | Run framework tests |
+| `make setup` | Copy example config |
+| `make clean` | Clean up everything |
+| `make mock` | Start local mock server |
+| `make health` | Check system health |
+
+## Testing Your API
+
+1. **Setup**:
+   ```bash
+   make setup
+   ```
+
+2. **Edit configuration**:
+   ```bash
+   # Edit .env with your API details
+   nano .env
+   ```
+
+3. **Run test**:
+   ```bash
+   make demo
+   ```
+
+4. **View results**:
+   - Web UI: http://localhost:8089
+   - Reports: `reports/report.html`
+
+## Configuration
+
+### Basic Configuration
 ```env
 OPENAPI_URL=https://your-api.com/openapi.json
 BASE_URL=https://your-api.com
+AUTH_MODE=none
+MAX_USERS=10
+SPAWN_RATE=2
+```
+
+### Authentication Examples
+```env
+# JWT Token
+AUTH_MODE=jwt
+JWT_TOKEN=your.jwt.token.here
+
+# API Key
+AUTH_MODE=apikey
+API_KEY=your-api-key
+
+# Username/Password
 AUTH_MODE=login
 LOGIN_URL=/auth/login
-LOGIN_USER=testuser
-LOGIN_PASS=testpass
-MAX_USERS=100
+LOGIN_USER=user@example.com
+LOGIN_PASS=password
 ```
 
-### 3. Run Tests
+**📖 Complete Parameter Documentation: [PARAMETERS.md](PARAMETERS.md)**
 
-**Web UI Mode (Development):**
-```bash
-docker compose up --build
-# Open http://localhost:8089
-```
+All parameters are fully documented with examples, validation rules, and security considerations.
 
-**Headless Mode (CI/CD):**
-```bash
-RUN_TIME=10m MAX_USERS=50 docker compose run --rm locust
-# Reports generated in ./reports/
-```
-
-## 📋 Configuration Reference
-
-| Variable | Required | Example | Description |
-|----------|----------|---------|-------------|
-| `OPENAPI_URL` | ✅* | `https://api.example.com/openapi.json` | OpenAPI spec URL |
-| `OPENAPI_PATH` | ✅* | `/specs/openapi.json` | Local OpenAPI file |
-| `BASE_URL` | ✅ | `https://staging.example.com` | Target API base URL |
-| `AUTH_MODE` | ❌ | `jwt` or `login` | Authentication method |
-| `JWT_TOKEN` | ⚠️** | `eyJhbGci...` | Bearer token (if jwt mode) |
-| `LOGIN_URL` | ⚠️*** | `/auth/login` | Login endpoint (if login mode) |
-| `LOGIN_USER` | ⚠️*** | `user@example.com` | Username/email |
-| `LOGIN_PASS` | ⚠️*** | `password123` | Password |
-| `MAX_USERS` | ❌ | `100` | Maximum concurrent users |
-| `SPAWN_RATE` | ❌ | `5` | Users spawned per second |
-| `RUN_TIME` | ❌ | `10m` | Test duration (headless only) |
-| `REQUEST_TIMEOUT` | ❌ | `10` | Request timeout in seconds |
-| `RETRY_COUNT` | ❌ | `1` | Retry failed requests |
-| `SPEC_INCLUDE_TAGS` | ❌ | `users,orders` | Include only these tags |
-| `SPEC_EXCLUDE_TAGS` | ❌ | `admin,internal` | Exclude these tags |
-| `EXTRA_HEADERS` | ❌ | `{"X-Env":"staging"}` | Additional headers (JSON) |
-
-> *Either `OPENAPI_URL` or `OPENAPI_PATH` required
-> **Required if `AUTH_MODE=jwt`
-> ***Required if `AUTH_MODE=login`
-
-## 🎭 Test Scenarios
-
-### Ramp-Up Testing
-Gradual load increase to find breaking points:
-```bash
-MAX_USERS=100 SPAWN_RATE=2 RUN_TIME=15m docker compose run --rm locust
-```
+## Test Scenarios
 
 ### Spike Testing
 Sudden traffic surge simulation:
 ```bash
-MAX_USERS=200 SPAWN_RATE=50 RUN_TIME=5m docker compose run --rm locust
+make spike
 ```
 
-### Soak Testing
-Extended duration for memory leak detection:
+### Endurance Testing
+Long-duration stability testing:
 ```bash
-MAX_USERS=50 SPAWN_RATE=1 RUN_TIME=2h docker compose run --rm locust
+make soak
 ```
 
-### Error Path Testing
-Focus on specific API endpoints:
+### Local Development
+Test against local mock server:
 ```bash
-SPEC_INCLUDE_TAGS=payments,checkout docker compose run --rm locust
+make mock          # Terminal 1: Start mock API
+make config-mock   # Terminal 2: Configure
+make demo          # Terminal 2: Run tests
 ```
 
-## 📊 Reports & Outputs
+## Reports and Analysis
 
-### Generated Files
-- `reports/report.html` - Comprehensive HTML dashboard
-- `reports/results_stats.csv` - Response time statistics
-- `reports/results_failures.csv` - Error tracking
-- `reports/results_stats_history.csv` - Time-series data
+The framework generates multiple types of reports:
 
-### Report Contents
-- **Response Times**: P50, P95, P99 percentiles
-- **Request Rates**: RPS, total requests, failures
-- **Error Analysis**: HTTP status codes, error messages
-- **Performance Trends**: Time-based metrics
+### Web Interface
+Real-time statistics available at http://localhost:8089:
+- Request rates and response times
+- Error rates and failure details
+- User load patterns
 
-## 🔧 Advanced Usage
+### Generated Reports
+- `reports/report.html` - Comprehensive test summary
+- `reports/endpoint_analysis.json` - API discovery results
+- `reports/results_*.csv` - Raw performance data
 
-### Custom OpenAPI Processing
-
-```python
-# scenario_builder.py extension
-def custom_payload_generator(schema):
-    """Override default payload generation"""
-    if schema.get("type") == "object":
-        return generate_realistic_data(schema)
-    return sample_from_schema(schema)
+### Endpoint Analysis
+Before running load tests, analyze your API:
+```bash
+make analyze
 ```
 
-### Multi-Environment Testing
+This generates:
+- Endpoint discovery summary
+- Complexity analysis
+- Authentication requirements
+- HTML report with visualizations
 
-```yaml
-# compose.override.yml
-services:
-  locust-staging:
-    extends: locust
-    environment:
-      BASE_URL: https://staging.api.com
+## Framework Features
 
-  locust-prod:
-    extends: locust
-    environment:
-      BASE_URL: https://api.com
-      MAX_USERS: 50  # Lower for production
+### Automatic Test Generation
+- Parses OpenAPI specifications automatically
+- Generates realistic request payloads
+- Handles path parameters and query strings
+- Supports all HTTP methods (GET, POST, PUT, DELETE, etc.)
+
+### Authentication Support
+- JWT tokens
+- API keys
+- Username/password login flows
+- OAuth client credentials
+- HTTP Basic authentication
+
+### Smart Filtering
+Control which endpoints to test:
+```env
+SPEC_INCLUDE_TAGS=users,orders    # Only test these categories
+SPEC_EXCLUDE_TAGS=admin,delete    # Skip these operations
 ```
 
-### CI/CD Integration
+### Safety Features
+- Production-safe configurations
+- Conservative default settings
+- Read-only operation filtering
+- Rate limiting controls
 
-**GitHub Actions:**
+## Development
+
+### Local Setup
+```bash
+make dev-setup     # Install Python dependencies
+make test-local    # Run tests without Docker
+```
+
+### Mock API Server
+For development and testing:
+```bash
+make mock          # Starts server at http://localhost:5000
+```
+
+The mock server provides:
+- RESTful API with users and posts
+- Authentication testing endpoints
+- Realistic response times
+- Error simulation
+
+## Troubleshooting
+
+### Quick Health Check
+```bash
+make health
+```
+
+### Common Issues
+
+**Docker not running**:
+```bash
+# Check Docker status
+docker --version
+docker info
+```
+
+**Configuration errors**:
+```bash
+# Validate your .env file
+make health
+```
+
+**OpenAPI spec issues**:
+```bash
+# Test spec loading
+make analyze
+```
+
+**Authentication problems**:
+```bash
+# Test auth configuration
+make health
+```
+
+## Production Usage
+
+### Safety Guidelines
+1. Always test on staging first
+2. Start with very low user counts
+3. Monitor system resources during tests
+4. Use read-only operations initially
+5. Have rollback procedures ready
+
+### Production Configuration
+```bash
+make safe          # Copy production-safe template
+# Edit .env with production values
+# Start with MAX_USERS=1, increase gradually
+```
+
+## CI/CD Integration
+
+### GitHub Actions
 ```yaml
 - name: Load Test Staging
   run: |
     docker compose run --rm \
       -e OPENAPI_URL=${{ secrets.STAGING_OPENAPI_URL }} \
       -e BASE_URL=${{ secrets.STAGING_BASE_URL }} \
+      -e MAX_USERS=25 \
       -e RUN_TIME=5m \
       locust
 
@@ -196,112 +244,57 @@ services:
     path: reports/
 ```
 
-## 🛠️ Development
-
-### Project Structure
-```
-├── locustfile.py           # Main Locust test file
-├── openapi_loader.py       # OpenAPI specification loader
-├── scenario_builder.py     # Dynamic test case generator
-├── auth.py                # Authentication handling
-├── settings.py            # Configuration management
-├── utils.py               # Helper utilities
-├── requirements.txt       # Python dependencies
-├── Dockerfile             # Container definition
-├── compose.yaml           # Development environment
-├── .env.example          # Configuration template
-├── configs/              # Configuration files
-├── specs/                # Local OpenAPI specs
-└── reports/              # Generated test reports
-```
-
-### Local Development
-
+### Docker Compose
+For CI environments:
 ```bash
-# Install dependencies locally (optional)
-pip install -r requirements.txt
-
-# Run with live reload
-docker compose up --build
-
-# Execute specific scenarios
-docker compose run --rm -e SPEC_INCLUDE_TAGS=users locust
+# Headless execution with time limit
+RUN_TIME=10m MAX_USERS=50 docker compose run --rm locust
 ```
 
-## 🔮 Roadmap
+## Architecture
 
-### Current Version (Locust-based)
-- ✅ OpenAPI dynamic test generation
-- ✅ JWT & login authentication
-- ✅ Docker containerization
-- ✅ HTML/CSV reporting
-- ✅ CI/CD examples
+The framework consists of several key components:
 
-### Upcoming: K6 Flavor
-A parallel implementation using K6 for JavaScript-based load testing:
+- **OpenAPI Loader**: Fetches and validates API specifications
+- **Scenario Builder**: Generates test scenarios from specifications
+- **Authentication Manager**: Handles various auth methods
+- **Locust Integration**: Executes load tests and collects metrics
+- **Report Generator**: Creates comprehensive test reports
 
-- 🔄 **K6 Engine**: JavaScript test scripts
-- 🔄 **TypeScript Support**: Type-safe test development
-- 🔄 **Cloud Integration**: K6 Cloud & Grafana dashboards
-- 🔄 **Performance Comparison**: Side-by-side Locust vs K6 metrics
+## Advanced Features
 
-> 📍 **Repository**: `dynamic-stress-tests-k6` (coming soon)
+### Tag-Based Testing
+Focus on specific API areas:
+```env
+SPEC_INCLUDE_TAGS=public,core      # Test only core public endpoints
+SPEC_EXCLUDE_TAGS=admin,beta       # Skip admin and beta features
+```
 
-## 🤝 Contributing
+### Custom Headers
+Add environment-specific headers:
+```env
+EXTRA_HEADERS={"X-Environment":"staging","X-Test-Run":"load-test"}
+```
+
+### Retry Logic
+Configure resilience testing:
+```env
+REQUEST_TIMEOUT=15    # Seconds per request
+RETRY_COUNT=3         # Retry failed requests
+```
+
+## Contributing
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `make test`
+5. Submit a pull request
 
-### Development Guidelines
-- Follow Python PEP 8 style guide
-- Add tests for new features
-- Update documentation
-- Ensure Docker compatibility
+## License
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**Authentication Failures:**
-```bash
-# Check login endpoint and credentials
-curl -X POST $BASE_URL$LOGIN_URL -d '{"username":"user","password":"pass"}'
-```
-
-**OpenAPI Loading Errors:**
-```bash
-# Validate OpenAPI spec
-curl -s $OPENAPI_URL | jq .info
-```
-
-**Container Permission Issues:**
-```bash
-# Fix volume permissions
-sudo chown -R $USER:$USER ./reports ./specs
-```
-
-### Performance Tips
-
-- Use `SPEC_INCLUDE_TAGS` to focus on critical endpoints
-- Start with low `MAX_USERS` and increase gradually
-- Monitor target system resources during tests
-- Use `REQUEST_TIMEOUT` to prevent hanging requests
-
-## 📞 Support
-
-- 🐛 **Issues**: [GitHub Issues](https://github.com/arisecloudsolutions/dynamic-stress-tests/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/arisecloudsolutions/dynamic-stress-tests/discussions)
-- 📧 **Email**: support@arisecloudsolutions.com
+MIT License - see LICENSE file for details.
 
 ---
 
-**Built with ❤️ by [Arise Cloud Solutions](https://github.com/arisecloudsolutions)**
-
-![Footer](https://img.shields.io/badge/Made%20with-Locust-red?style=for-the-badge&logo=python)
+**Built for reliable API load testing and performance validation.**

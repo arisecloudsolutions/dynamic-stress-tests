@@ -1,0 +1,933 @@
+{
+  "metadata": {
+    "analysis_timestamp": "2025-09-15T18:02:14.311706",
+    "total_endpoints": 19,
+    "api_title": "Swagger Petstore - OpenAPI 3.0",
+    "api_version": "1.0.27",
+    "openapi_version": "3.0.4",
+    "base_url": "https://petstore3.swagger.io/api/v3"
+  },
+  "statistics": {
+    "methods_distribution": {
+      "PUT": 2,
+      "POST": 6,
+      "GET": 8,
+      "DELETE": 3
+    },
+    "tags_distribution": {
+      "pet": 8,
+      "store": 4,
+      "user": 7
+    },
+    "parameter_complexity": {
+      "Low": 16,
+      "Medium": 3
+    }
+  },
+  "endpoint_matrix": [
+    {
+      "path": "/pet/{petId}",
+      "method": "DELETE",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Deletes a pet.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 1
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "DELETE",
+      "tags": [
+        "store"
+      ],
+      "summary": "Delete purchase order by identifier.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/user/{username}",
+      "method": "DELETE",
+      "tags": [
+        "user"
+      ],
+      "summary": "Delete user resource.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/pet/findByStatus",
+      "method": "GET",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Finds Pets by status.",
+      "parameters": {
+        "path": 0,
+        "query": 1,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 2
+    },
+    {
+      "path": "/pet/findByTags",
+      "method": "GET",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Finds Pets by tags.",
+      "parameters": {
+        "path": 0,
+        "query": 1,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 2
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "GET",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Find pet by ID.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/store/inventory",
+      "method": "GET",
+      "tags": [
+        "store"
+      ],
+      "summary": "Returns pet inventories by status.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 1
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "GET",
+      "tags": [
+        "store"
+      ],
+      "summary": "Find purchase order by ID.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/user/login",
+      "method": "GET",
+      "tags": [
+        "user"
+      ],
+      "summary": "Logs user into the system.",
+      "parameters": {
+        "path": 0,
+        "query": 2,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 3
+    },
+    {
+      "path": "/user/logout",
+      "method": "GET",
+      "tags": [
+        "user"
+      ],
+      "summary": "Logs out current logged in user session.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 1
+    },
+    {
+      "path": "/user/{username}",
+      "method": "GET",
+      "tags": [
+        "user"
+      ],
+      "summary": "Get user by user name.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/pet",
+      "method": "POST",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Add a new pet to the store.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "400",
+        "422",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 5
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "POST",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Updates a pet in the store with form data.",
+      "parameters": {
+        "path": 1,
+        "query": 2,
+        "headers": 0
+      },
+      "has_request_body": false,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 5
+    },
+    {
+      "path": "/pet/{petId}/uploadImage",
+      "method": "POST",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Uploads an image.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 7
+    },
+    {
+      "path": "/store/order",
+      "method": "POST",
+      "tags": [
+        "store"
+      ],
+      "summary": "Place an order for a pet.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "400",
+        "422",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 5
+    },
+    {
+      "path": "/user",
+      "method": "POST",
+      "tags": [
+        "user"
+      ],
+      "summary": "Create user.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/user/createWithList",
+      "method": "POST",
+      "tags": [
+        "user"
+      ],
+      "summary": "Creates list of users with given input array.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 4
+    },
+    {
+      "path": "/pet",
+      "method": "PUT",
+      "tags": [
+        "pet"
+      ],
+      "summary": "Update an existing pet.",
+      "parameters": {
+        "path": 0,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "422",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 5
+    },
+    {
+      "path": "/user/{username}",
+      "method": "PUT",
+      "tags": [
+        "user"
+      ],
+      "summary": "Update user resource.",
+      "parameters": {
+        "path": 1,
+        "query": 0,
+        "headers": 0
+      },
+      "has_request_body": true,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1,
+      "complexity_score": 7
+    }
+  ],
+  "coverage_analysis": {
+    "method_coverage": {
+      "percentage": 57.14285714285714,
+      "covered": [
+        "POST",
+        "PUT",
+        "GET",
+        "DELETE"
+      ],
+      "missing": [
+        "HEAD",
+        "PATCH",
+        "OPTIONS"
+      ]
+    },
+    "tag_coverage": {
+      "percentage": 100.0,
+      "covered": [
+        "user",
+        "store",
+        "pet"
+      ],
+      "missing": []
+    },
+    "parameter_coverage": {
+      "percentage": 100.0,
+      "covered": [
+        "body",
+        "query",
+        "header",
+        "path"
+      ],
+      "missing": []
+    }
+  },
+  "health_check_results": {},
+  "scenarios": [
+    {
+      "method": "PUT",
+      "path": "/pet",
+      "operation_id": "updatePet",
+      "summary": "Update an existing pet.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": {
+        "name": "doggie",
+        "photoUrls": [
+          "test_string_274",
+          "test_string_847"
+        ],
+        "tags": [
+          {
+            "name": "Sample Data"
+          },
+          {},
+          {
+            "id": 496,
+            "name": "Demo Account"
+          }
+        ],
+        "status": "pending"
+      },
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "422",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/pet",
+      "operation_id": "addPet",
+      "summary": "Add a new pet to the store.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": {
+        "id": 10,
+        "name": "doggie",
+        "category": {
+          "id": 1
+        },
+        "photoUrls": [
+          "test_string_173",
+          "test_string_596"
+        ],
+        "tags": [
+          {}
+        ],
+        "status": "available"
+      },
+      "expected_responses": [
+        "200",
+        "400",
+        "422",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/pet/findByStatus",
+      "operation_id": "findPetsByStatus",
+      "summary": "Finds Pets by status.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {},
+      "query_params": {
+        "status": "sold"
+      },
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/pet/findByTags",
+      "operation_id": "findPetsByTags",
+      "summary": "Finds Pets by tags.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {},
+      "query_params": {
+        "tags": [
+          "test_string_535",
+          "test_string_419",
+          "test_string_200"
+        ]
+      },
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/pet/{petId}",
+      "operation_id": "getPetById",
+      "summary": "Find pet by ID.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {
+        "petId": 222
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/pet/{petId}",
+      "operation_id": "updatePetWithForm",
+      "summary": "Updates a pet in the store with form data.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {
+        "petId": 166
+      },
+      "query_params": {
+        "name": "Jane Smith",
+        "status": "active"
+      },
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "DELETE",
+      "path": "/pet/{petId}",
+      "operation_id": "deletePet",
+      "summary": "Deletes a pet.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {
+        "petId": 99
+      },
+      "query_params": {},
+      "header_params": {
+        "api_key": "test_string_625"
+      },
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/pet/{petId}/uploadImage",
+      "operation_id": "uploadFile",
+      "summary": "Uploads an image.",
+      "tags": [
+        "pet"
+      ],
+      "path_params": {
+        "petId": 302
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": "test_string_608",
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/store/inventory",
+      "operation_id": "getInventory",
+      "summary": "Returns pet inventories by status.",
+      "tags": [
+        "store"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/store/order",
+      "operation_id": "placeOrder",
+      "summary": "Place an order for a pet.",
+      "tags": [
+        "store"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": {
+        "id": 10,
+        "petId": 198772,
+        "quantity": 7,
+        "shipDate": "2025-09-15T09:02:14.311520Z"
+      },
+      "expected_responses": [
+        "200",
+        "400",
+        "422",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/store/order/{orderId}",
+      "operation_id": "getOrderById",
+      "summary": "Find purchase order by ID.",
+      "tags": [
+        "store"
+      ],
+      "path_params": {
+        "orderId": 128
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "DELETE",
+      "path": "/store/order/{orderId}",
+      "operation_id": "deleteOrder",
+      "summary": "Delete purchase order by identifier.",
+      "tags": [
+        "store"
+      ],
+      "path_params": {
+        "orderId": 947
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/user",
+      "operation_id": "createUser",
+      "summary": "Create user.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": {
+        "username": "theUser",
+        "firstName": "John",
+        "lastName": "James",
+        "email": "john@email.com",
+        "password": "12345",
+        "userStatus": 1
+      },
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "POST",
+      "path": "/user/createWithList",
+      "operation_id": "createUsersWithListInput",
+      "summary": "Creates list of users with given input array.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": [
+        {
+          "id": 10,
+          "username": "theUser",
+          "lastName": "James",
+          "password": "12345",
+          "phone": "12345"
+        }
+      ],
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/user/login",
+      "operation_id": "loginUser",
+      "summary": "Logs user into the system.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {},
+      "query_params": {
+        "username": "Demo Account",
+        "password": "test_string_618"
+      },
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/user/logout",
+      "operation_id": "logoutUser",
+      "summary": "Logs out current logged in user session.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {},
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "GET",
+      "path": "/user/{username}",
+      "operation_id": "getUserByName",
+      "summary": "Get user by user name.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {
+        "username": "John Doe"
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "PUT",
+      "path": "/user/{username}",
+      "operation_id": "updateUser",
+      "summary": "Update user resource.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {
+        "username": "Sample Data"
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": {
+        "username": "theUser",
+        "firstName": "John",
+        "lastName": "James",
+        "email": "john@email.com",
+        "password": "12345",
+        "phone": "12345"
+      },
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    },
+    {
+      "method": "DELETE",
+      "path": "/user/{username}",
+      "operation_id": "deleteUser",
+      "summary": "Delete user resource.",
+      "tags": [
+        "user"
+      ],
+      "path_params": {
+        "username": "John Doe"
+      },
+      "query_params": {},
+      "header_params": {},
+      "request_body": null,
+      "expected_responses": [
+        "200",
+        "400",
+        "404",
+        "default"
+      ],
+      "weight": 1
+    }
+  ]
+}
