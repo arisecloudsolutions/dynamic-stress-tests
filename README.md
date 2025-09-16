@@ -73,7 +73,7 @@ LOGIN_USER=user@example.com
 LOGIN_PASS=password
 ```
 
-**📖 Complete Parameter Documentation: [PARAMETERS.md](PARAMETERS.md)**
+**📖 Complete Parameter Documentation: [doc/PARAMETERS.md](doc/PARAMETERS.md)**
 
 All parameters are fully documented with examples, validation rules, and security considerations.
 

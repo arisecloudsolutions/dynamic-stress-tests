@@ -7,7 +7,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy project files
-COPY . .
+COPY src/ .
 
 # Create reports directory
 RUN mkdir -p /mnt/locust/reports

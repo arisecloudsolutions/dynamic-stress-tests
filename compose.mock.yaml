@@ -24,7 +24,7 @@ services:
     volumes:
       - ./reports:/mnt/locust/reports
       - ./specs:/mnt/locust/specs
-      - ./:/mnt/locust
+      - ./src:/mnt/locust
     depends_on:
       - mock-api
     restart: unless-stopped
