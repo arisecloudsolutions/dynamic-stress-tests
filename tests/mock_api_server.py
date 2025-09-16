@@ -508,7 +508,7 @@ def root():
     })
 
 if __name__ == '__main__':
-    print("🚀 Starting Mock API Server...")
+    print(" Starting Mock API Server...")
     print("📋 OpenAPI spec: http://localhost:5000/openapi.json")
     print("🔍 Health check: http://localhost:5000/health")
     print("📖 Demo auth tokens available at: http://localhost:5000/")

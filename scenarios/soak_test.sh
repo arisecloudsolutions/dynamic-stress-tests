@@ -9,7 +9,7 @@ echo
 
 # Ensure we have the basic config
 if [ ! -f .env ]; then
-    echo "❌ No .env file found. Copy from examples/ first:"
+    echo "💀 No .env file found. Copy from examples/ first:"
     echo "   cp examples/.env.petstore .env"
     exit 1
 fi

@@ -8,8 +8,8 @@ import requests
 from typing import Dict, List, Optional, Tuple, Any
 from urllib.parse import urlparse
 
-from .logger import get_logger, log_safety_check
-from .exceptions import ConfigurationError, ValidationError, NetworkError
+from logger import get_logger, log_safety_check
+from exceptions import ConfigurationError, ValidationError, NetworkError
 
 
 class ConfigValidator:
@@ -350,7 +350,7 @@ class ConfigValidator:
 
         try:
             # Import here to avoid circular imports
-            from .auth import AuthenticationManager
+            from auth import AuthenticationManager
             auth_manager = AuthenticationManager()
             headers = auth_manager.get_auth_headers()
 
@@ -431,7 +431,7 @@ def validate_and_exit():
         print()
 
     if errors:
-        print("❌ ERRORS:")
+        print("💀 ERRORS:")
         for error in errors:
             print(f"   {error}")
         print("\nConfiguration validation failed!")

@@ -1,4 +1,4 @@
-FROM locustio/locust
+FROM locustio/locust:2.24.2
 
 WORKDIR /mnt/locust
 

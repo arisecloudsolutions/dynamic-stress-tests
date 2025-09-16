@@ -84,7 +84,7 @@ class EndpointVisualizer:
             return analysis_results
 
         except Exception as e:
-            print(f"❌ Analysis failed: {e}")
+            print(f"💀 Analysis failed: {e}")
             return {"error": str(e)}
 
     def _perform_health_checks(self):
@@ -98,7 +98,7 @@ class EndpointVisualizer:
 
         # Basic connectivity
         if not checker.check_base_connectivity():
-            print("   ❌ Base URL not accessible")
+            print("   💀 Base URL not accessible")
             return
 
         # Sample endpoint checks
@@ -300,9 +300,9 @@ class EndpointVisualizer:
         tag_cov = coverage.get('tag_coverage', {}).get('percentage', 0)
         param_cov = coverage.get('parameter_coverage', {}).get('percentage', 0)
 
-        print(f"   Methods:    {method_cov:5.1f}% {'✅' if method_cov > 80 else '⚠️' if method_cov > 50 else '❌'}")
-        print(f"   Tags:       {tag_cov:5.1f}% {'✅' if tag_cov > 80 else '⚠️' if tag_cov > 50 else '❌'}")
-        print(f"   Parameters: {param_cov:5.1f}% {'✅' if param_cov > 80 else '⚠️' if param_cov > 50 else '❌'}")
+        print(f"   Methods:    {method_cov:5.1f}% {'✅' if method_cov > 80 else '⚠️' if method_cov > 50 else '💀'}")
+        print(f"   Tags:       {tag_cov:5.1f}% {'✅' if tag_cov > 80 else '⚠️' if tag_cov > 50 else '💀'}")
+        print(f"   Parameters: {param_cov:5.1f}% {'✅' if param_cov > 80 else '⚠️' if param_cov > 50 else '💀'}")
 
         # Health Check Results
         if self.health_results and self.health_results.get('checked', 0) > 0:
@@ -525,7 +525,7 @@ Environment Variables:
     # Validate environment
     errors = EnvironmentValidator.validate_configuration()
     if errors:
-        print("❌ Configuration errors found:")
+        print("💀 Configuration errors found:")
         for error in errors:
             print(f"   {error}")
         print("\n💡 Please fix the configuration and try again.")
@@ -540,14 +540,14 @@ Environment Variables:
     )
 
     if "error" in analysis:
-        print(f"❌ Analysis failed: {analysis['error']}")
+        print(f"💀 Analysis failed: {analysis['error']}")
         sys.exit(1)
 
     # Generate HTML report if requested
     if args.html:
         visualizer.generate_html_report(analysis)
 
-    print("\n🚀 Ready to run load tests with these endpoints!")
+    print("\n Ready to run load tests with these endpoints!")
     print("   Use: docker compose up --build")
 
 

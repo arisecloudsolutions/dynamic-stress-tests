@@ -31,7 +31,7 @@ class OpenAPILoader:
 
         if not path and not url:
             raise RuntimeError(
-                "❌ Configuration Error: Either OPENAPI_URL or OPENAPI_PATH must be provided\n"
+                "💀 Configuration Error: Either OPENAPI_URL or OPENAPI_PATH must be provided\n"
                 "   Set one of these environment variables:\n"
                 "   - OPENAPI_URL=https://api.example.com/openapi.json\n"
                 "   - OPENAPI_PATH=/path/to/openapi.json"
@@ -51,7 +51,7 @@ class OpenAPILoader:
             return self.spec_data
 
         except Exception as e:
-            print(f"❌ OpenAPI Loading Failed: {str(e)}")
+            print(f"💀 OpenAPI Loading Failed: {str(e)}")
             raise
 
     def _load_from_file(self, file_path: str) -> Dict[str, Any]:
@@ -254,4 +254,4 @@ if __name__ == "__main__":
         spec = load_openapi()
         print(f"✅ Successfully loaded spec with {len(spec['paths'])} paths")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"💀 Error: {e}")

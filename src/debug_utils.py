@@ -11,11 +11,11 @@ from typing import Dict, Any, Optional, List
 from datetime import datetime
 import requests
 
-from .logger import get_logger
-from .config_validator import ConfigValidator
-from .auth import AuthenticationManager
-from .openapi_loader import load_openapi_spec
-from .scenario_builder import ScenarioBuilder
+from logger import get_logger
+from config_validator import ConfigValidator
+from auth import AuthenticationManager
+from openapi_loader import load_openapi_spec
+from scenario_builder import ScenarioBuilder
 
 
 class DebugSession:
@@ -61,7 +61,7 @@ class DebugSession:
                 print("\n\n👋 Debug session interrupted")
                 break
             except Exception as e:
-                print(f"\n❌ Error: {e}")
+                print(f"\n💀 Error: {e}")
                 traceback.print_exc()
 
         print(f"\n🏁 Debug session completed - {self.session_id}")
@@ -89,7 +89,7 @@ class DebugSession:
         if is_valid:
             print("✅ Configuration is valid!")
         else:
-            print("❌ Configuration has errors:")
+            print("💀 Configuration has errors:")
             for error in errors:
                 print(f"   • {error}")
 
@@ -133,7 +133,7 @@ class DebugSession:
                     print(f"   {key}: {value}")
 
         except Exception as e:
-            print(f"❌ Authentication failed: {e}")
+            print(f"💀 Authentication failed: {e}")
 
     def _debug_openapi(self):
         """Debug OpenAPI specification loading."""
@@ -175,7 +175,7 @@ class DebugSession:
                 print(f"   Tags: {', '.join(sorted(all_tags))}")
 
         except Exception as e:
-            print(f"❌ OpenAPI loading failed: {e}")
+            print(f"💀 OpenAPI loading failed: {e}")
             traceback.print_exc()
 
     def _debug_scenarios(self):
@@ -205,7 +205,7 @@ class DebugSession:
                     print(f"   ... and {len(scenarios) - 5} more")
 
         except Exception as e:
-            print(f"❌ Scenario generation failed: {e}")
+            print(f"💀 Scenario generation failed: {e}")
             traceback.print_exc()
 
     def _debug_network(self):
@@ -215,7 +215,7 @@ class DebugSession:
 
         base_url = os.getenv("BASE_URL")
         if not base_url:
-            print("❌ BASE_URL not configured")
+            print("💀 BASE_URL not configured")
             return
 
         print(f"Testing connectivity to: {base_url}")
@@ -237,11 +237,11 @@ class DebugSession:
                     print(f"   {header}: {response.headers[header]}")
 
         except requests.exceptions.Timeout:
-            print("❌ Connection timed out")
+            print("💀 Connection timed out")
         except requests.exceptions.ConnectionError:
-            print("❌ Connection refused")
+            print("💀 Connection refused")
         except Exception as e:
-            print(f"❌ Network error: {e}")
+            print(f"💀 Network error: {e}")
 
     def _show_environment(self):
         """Show environment information."""
@@ -281,12 +281,12 @@ class DebugSession:
 
         base_url = os.getenv("BASE_URL")
         if not base_url:
-            print("❌ BASE_URL not configured")
+            print("💀 BASE_URL not configured")
             return
 
         path = input("Enter endpoint path (e.g., /users): ").strip()
         if not path:
-            print("❌ No path provided")
+            print("💀 No path provided")
             return
 
         method = input("HTTP method [GET]: ").strip().upper() or "GET"
@@ -324,7 +324,7 @@ class DebugSession:
                 print(f"\nResponse text preview:\n{response.text[:200]}...")
 
         except Exception as e:
-            print(f"❌ Request failed: {e}")
+            print(f"💀 Request failed: {e}")
 
     def _export_debug_info(self):
         """Export debug information to file."""
@@ -381,7 +381,7 @@ class DebugSession:
             print(f"✅ Debug info exported to: {filename}")
 
         except Exception as e:
-            print(f"❌ Export failed: {e}")
+            print(f"💀 Export failed: {e}")
 
 
 def quick_debug():
@@ -397,7 +397,7 @@ def quick_debug():
     if is_valid:
         print("   ✅ Configuration is valid")
     else:
-        print("   ❌ Configuration has errors:")
+        print("   💀 Configuration has errors:")
         for error in errors[:3]:  # Show first 3 errors
             print(f"      • {error}")
         if len(errors) > 3:
@@ -410,7 +410,7 @@ def quick_debug():
         headers = auth_manager.get_auth_headers()
         print(f"   ✅ Authentication successful ({len(headers)} headers)")
     except Exception as e:
-        print(f"   ❌ Authentication failed: {e}")
+        print(f"   💀 Authentication failed: {e}")
 
     # Network check
     print("\n3. Network Check:")
@@ -420,7 +420,7 @@ def quick_debug():
             response = requests.get(base_url, timeout=5)
             print(f"   ✅ Network connectivity OK ({response.status_code})")
         except Exception as e:
-            print(f"   ❌ Network issue: {e}")
+            print(f"   💀 Network issue: {e}")
     else:
         print("   ⚠️  No BASE_URL configured")
 

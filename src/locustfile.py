@@ -42,7 +42,7 @@ def initialize_test_environment():
 
     try:
         print("\n" + "="*60)
-        print("🚀 INITIALIZING DYNAMIC STRESS TEST FRAMEWORK")
+        print(" INITIALIZING DYNAMIC STRESS TEST FRAMEWORK")
         print("="*60)
 
         # Setup logging
@@ -76,7 +76,7 @@ def initialize_test_environment():
         TEST_TASKS = builder.build_tasks(SPEC_INCLUDE_TAGS, SPEC_EXCLUDE_TAGS)
 
         if not TEST_TASKS:
-            error = "❌ No test scenarios generated. Check your tag filters or OpenAPI spec."
+            error = "💀 No test scenarios generated. Check your tag filters or OpenAPI spec."
             STARTUP_ERRORS.append(error)
             print(error)
             return False
@@ -90,7 +90,7 @@ def initialize_test_environment():
         health_checker = EndpointHealthChecker(base_url, auth_headers)
 
         if not health_checker.check_base_connectivity():
-            error = f"❌ Cannot connect to base URL: {base_url}"
+            error = f"💀 Cannot connect to base URL: {base_url}"
             STARTUP_ERRORS.append(error)
             print(error)
             return False
@@ -98,7 +98,7 @@ def initialize_test_environment():
         # Sample endpoint check
         health_results = health_checker.sample_endpoint_check(TEST_TASKS, max_checks=5)
         if health_results["checked"] > 0 and health_results["accessible"] == 0:
-            error = "❌ No sample endpoints are accessible"
+            error = "💀 No sample endpoints are accessible"
             STARTUP_ERRORS.append(error)
             print(error)
             return False
@@ -129,7 +129,7 @@ def initialize_test_environment():
         return True
 
     except Exception as e:
-        error = f"❌ Initialization failed: {str(e)}"
+        error = f"💀 Initialization failed: {str(e)}"
         STARTUP_ERRORS.append(error)
         print(error)
         logging.exception("Initialization failed")
@@ -148,7 +148,7 @@ def on_test_start(environment, **kwargs):
 
     # Initialize test environment
     if not initialize_test_environment():
-        print("\n❌ TEST INITIALIZATION FAILED")
+        print("\n💀 TEST INITIALIZATION FAILED")
         print("Startup errors:")
         for error in STARTUP_ERRORS:
             print(f"   {error}")
@@ -184,7 +184,7 @@ def on_test_stop(environment, **kwargs):
         print("="*60)
         print(f"⏱️  Duration: {summary['test_duration']:.1f}s")
         print(f"📈 Total Requests: {summary['total_requests']}")
-        print(f"❌ Total Failures: {summary['total_failures']} ({summary['failure_rate']:.1f}%)")
+        print(f"💀 Total Failures: {summary['total_failures']} ({summary['failure_rate']:.1f}%)")
         print(f"⚡ Requests/sec: {summary['requests_per_second']:.1f}")
 
         # Performance metrics
@@ -199,7 +199,7 @@ def on_test_stop(environment, **kwargs):
 
         # Top errors
         if final_report["errors"]:
-            print(f"\n❌ Top Errors:")
+            print(f"\n💀 Top Errors:")
             sorted_errors = sorted(final_report["errors"].items(), key=lambda x: x[1], reverse=True)
             for error, count in sorted_errors[:5]:
                 print(f"   {error}: {count} occurrences")
@@ -223,15 +223,15 @@ class DynamicAPIUser(HttpUser):
         global STARTUP_ERRORS, TEST_TASKS, AUTH_MANAGER
 
         if STARTUP_ERRORS:
-            print(f"❌ User cannot start due to initialization errors: {STARTUP_ERRORS}")
+            print(f"💀 User cannot start due to initialization errors: {STARTUP_ERRORS}")
             raise StopUser()
 
         if not TEST_TASKS:
-            print("❌ No test tasks available")
+            print("💀 No test tasks available")
             raise StopUser()
 
         if not AUTH_MANAGER:
-            print("❌ Authentication manager not initialized")
+            print("💀 Authentication manager not initialized")
             raise StopUser()
 
         print(f"👤 User {self.environment.runner.user_count} started")
@@ -256,7 +256,7 @@ class DynamicAPIUser(HttpUser):
         try:
             auth_headers = AUTH_MANAGER.get_auth_headers()
         except Exception as e:
-            print(f"❌ Authentication failed: {e}")
+            print(f"💀 Authentication failed: {e}")
             return
 
         # Execute the API call
@@ -414,6 +414,6 @@ if __name__ == "__main__":
         print(f"✅ Test environment initialized with {len(TEST_TASKS)} tasks")
         print("Ready to run with: locust -f locustfile.py")
     else:
-        print("❌ Test environment initialization failed")
+        print("💀 Test environment initialization failed")
         for error in STARTUP_ERRORS:
             print(f"   {error}")

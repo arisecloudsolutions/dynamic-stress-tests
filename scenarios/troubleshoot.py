@@ -70,7 +70,7 @@ class TroubleshootingTool:
             if not errors:
                 print("   ✅ Environment configuration is valid")
             else:
-                print(f"   ❌ Found {len(errors)} configuration issues:")
+                print(f"   💀 Found {len(errors)} configuration issues:")
                 for i, error in enumerate(errors, 1):
                     print(f"      {i}. {error}")
                     self.issues_found.append(f"Config: {error}")
@@ -109,7 +109,7 @@ class TroubleshootingTool:
             if result.returncode == 0:
                 print("   ✅ Docker is installed")
             else:
-                print("   ❌ Docker is not installed or not working")
+                print("   💀 Docker is not installed or not working")
                 self.issues_found.append("Docker not available")
 
             # Check Docker Compose
@@ -127,19 +127,19 @@ class TroubleshootingTool:
                     continue
 
             if not compose_working:
-                print("   ❌ Docker Compose is not working")
+                print("   💀 Docker Compose is not working")
                 self.issues_found.append("Docker Compose not available")
                 print("   💡 Try: docker compose --version")
 
             # Check if Docker daemon is running
             result = subprocess.run(['docker', 'info'], capture_output=True, text=True)
             if result.returncode != 0:
-                print("   ❌ Docker daemon is not running")
+                print("   💀 Docker daemon is not running")
                 self.issues_found.append("Docker daemon not running")
                 print("   💡 Start Docker Desktop or run: sudo systemctl start docker")
 
         except FileNotFoundError:
-            print("   ❌ Docker is not installed")
+            print("   💀 Docker is not installed")
             self.issues_found.append("Docker not installed")
 
     def _check_network_connectivity(self):
@@ -160,11 +160,11 @@ class TroubleshootingTool:
                     self.issues_found.append(f"Network: {name} returned {response.status_code}")
 
             except requests.exceptions.ConnectTimeout:
-                print(f"   ❌ {name}: Connection timeout")
+                print(f"   💀 {name}: Connection timeout")
                 self.issues_found.append(f"Network: {name} timeout")
 
             except requests.exceptions.ConnectionError:
-                print(f"   ❌ {name}: Connection failed")
+                print(f"   💀 {name}: Connection failed")
                 self.issues_found.append(f"Network: {name} connection failed")
 
             except Exception as e:
@@ -194,11 +194,11 @@ class TroubleshootingTool:
                     self.issues_found.append("OpenAPI spec has no paths")
 
             else:
-                print("   ❌ OpenAPI spec is not valid")
+                print("   💀 OpenAPI spec is not valid")
                 self.issues_found.append("Invalid OpenAPI spec format")
 
         except Exception as e:
-            print(f"   ❌ Failed to load OpenAPI spec: {str(e)[:100]}...")
+            print(f"   💀 Failed to load OpenAPI spec: {str(e)[:100]}...")
             self.issues_found.append(f"OpenAPI loading failed: {e}")
 
             # Suggest specific fixes
@@ -229,7 +229,7 @@ class TroubleshootingTool:
                 self.issues_found.append("Auth configured but no auth header generated")
 
         except Exception as e:
-            print(f"   ❌ Authentication failed: {str(e)[:100]}...")
+            print(f"   💀 Authentication failed: {str(e)[:100]}...")
             self.issues_found.append(f"Authentication error: {e}")
 
             # Suggest fixes based on auth mode
@@ -253,7 +253,7 @@ class TroubleshootingTool:
                 __import__(package)
                 print(f"   ✅ {package}: {description}")
             except ImportError:
-                print(f"   ❌ {package}: Not installed - {description}")
+                print(f"   💀 {package}: Not installed - {description}")
                 self.issues_found.append(f"Missing dependency: {package}")
 
         # Check Python version
@@ -261,7 +261,7 @@ class TroubleshootingTool:
         if python_version >= (3, 7):
             print(f"   ✅ Python {python_version.major}.{python_version.minor}: Compatible")
         else:
-            print(f"   ❌ Python {python_version.major}.{python_version.minor}: Too old (need 3.7+)")
+            print(f"   💀 Python {python_version.major}.{python_version.minor}: Too old (need 3.7+)")
             self.issues_found.append("Python version too old")
 
     def _print_summary(self):
@@ -272,7 +272,7 @@ class TroubleshootingTool:
 
         if not self.issues_found:
             print("🎉 No issues found! Your setup looks good.")
-            print("\n🚀 Ready to run load tests:")
+            print("\n Ready to run load tests:")
             print("   docker compose up --build")
             print("   Open http://localhost:8089")
         else:
@@ -317,11 +317,11 @@ class TroubleshootingTool:
         for name, check_func in checks:
             try:
                 results[name] = check_func()
-                status = "✅" if results[name] else "❌"
+                status = "✅" if results[name] else "💀"
                 print(f"{status} {name}")
             except Exception as e:
                 results[name] = False
-                print(f"❌ {name}: {str(e)[:30]}...")
+                print(f"💀 {name}: {str(e)[:30]}...")
 
         # Summary
         passed = sum(results.values())

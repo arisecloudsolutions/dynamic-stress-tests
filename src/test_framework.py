@@ -511,7 +511,7 @@ def run_comprehensive_test():
             spec = loader.load_openapi()
             print(f"   ✅ Loaded OpenAPI spec with {len(spec.get('paths', {}))} paths")
         except Exception as e:
-            print(f"   ❌ OpenAPI loading failed: {e}")
+            print(f"   💀 OpenAPI loading failed: {e}")
             return False
 
         print("\n3️⃣  Testing scenario building...")
@@ -524,7 +524,7 @@ def run_comprehensive_test():
             for i, scenario in enumerate(scenarios[:3]):
                 print(f"      {i+1}. {scenario['method']} {scenario['path']}")
         except Exception as e:
-            print(f"   ❌ Scenario building failed: {e}")
+            print(f"   💀 Scenario building failed: {e}")
             return False
 
         print("\n4️⃣  Testing authentication...")
@@ -533,7 +533,7 @@ def run_comprehensive_test():
             headers = auth_manager.get_auth_headers()
             print(f"   ✅ Authentication configured ({len(headers)} headers)")
         except Exception as e:
-            print(f"   ❌ Authentication failed: {e}")
+            print(f"   💀 Authentication failed: {e}")
             return False
 
         print("\n5️⃣  Testing endpoint analysis...")
@@ -544,10 +544,10 @@ def run_comprehensive_test():
                 total_endpoints = analysis["metadata"]["total_endpoints"]
                 print(f"   ✅ Analyzed {total_endpoints} endpoints")
             else:
-                print(f"   ❌ Analysis failed: {analysis['error']}")
+                print(f"   💀 Analysis failed: {analysis['error']}")
                 return False
         except Exception as e:
-            print(f"   ❌ Endpoint analysis failed: {e}")
+            print(f"   💀 Endpoint analysis failed: {e}")
             return False
 
         print("\n6️⃣  Testing reporter functionality...")
@@ -560,13 +560,13 @@ def run_comprehensive_test():
             report = reporter.generate_final_report()
             print(f"   ✅ Generated report with {report['summary']['total_requests']} requests")
         except Exception as e:
-            print(f"   ❌ Reporter test failed: {e}")
+            print(f"   💀 Reporter test failed: {e}")
             return False
 
     print("\n" + "=" * 60)
     print("🎉 COMPREHENSIVE TEST COMPLETED SUCCESSFULLY!")
     print("✅ All framework components are working correctly")
-    print("🚀 Ready for production load testing!")
+    print(" Ready for production load testing!")
     print("=" * 60)
     return True
 
@@ -604,7 +604,7 @@ def main():
         print("\n🎉 All tests passed!")
         sys.exit(0)
     else:
-        print("\n❌ Some tests failed!")
+        print("\n💀 Some tests failed!")
         sys.exit(1)
 
 

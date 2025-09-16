@@ -5,8 +5,8 @@ from typing import Dict, Optional, Any
 from urllib.parse import urljoin
 import time
 
-from .logger import get_logger, log_auth_success, log_auth_failure, log_config_loaded
-from .exceptions import AuthenticationError, ConfigurationError, NetworkError
+from logger import get_logger, log_auth_success, log_auth_failure, log_config_loaded
+from exceptions import AuthenticationError, ConfigurationError, NetworkError
 
 class AuthenticationManager:
     """
@@ -49,7 +49,7 @@ class AuthenticationManager:
                 return self.extra_headers.copy()
 
         except Exception as e:
-            print(f"❌ Authentication failed: {str(e)}")
+            print(f"💀 Authentication failed: {str(e)}")
             raise RuntimeError(f"Authentication failed: {str(e)}")
 
     def _get_jwt_headers(self) -> Dict[str, str]:
@@ -372,4 +372,4 @@ if __name__ == "__main__":
         headers = get_auth_headers()
         print(f"✅ Headers: {headers}")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"💀 Error: {e}")

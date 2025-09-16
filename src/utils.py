@@ -160,16 +160,16 @@ class EnvironmentValidator:
         openapi_path = os.getenv("OPENAPI_PATH")
 
         if not openapi_url and not openapi_path:
-            errors.append("❌ Either OPENAPI_URL or OPENAPI_PATH must be set")
+            errors.append("💀 Either OPENAPI_URL or OPENAPI_PATH must be set")
         elif openapi_path and not os.path.exists(openapi_path):
-            errors.append(f"❌ OPENAPI_PATH file does not exist: {openapi_path}")
+            errors.append(f"💀 OPENAPI_PATH file does not exist: {openapi_path}")
 
         # Validate base URL
         base_url = os.getenv("BASE_URL")
         if not base_url:
-            errors.append("❌ BASE_URL is required")
+            errors.append("💀 BASE_URL is required")
         elif not base_url.startswith(("http://", "https://")):
-            errors.append("❌ BASE_URL must start with http:// or https://")
+            errors.append("💀 BASE_URL must start with http:// or https://")
 
         # Validate authentication configuration
         auth_mode = os.getenv("AUTH_MODE", "").lower()
@@ -191,9 +191,9 @@ class EnvironmentValidator:
                 try:
                     value = float(value_str)
                     if not min_val <= value <= max_val:
-                        errors.append(f"❌ {setting}={value} is outside valid range [{min_val}, {max_val}]")
+                        errors.append(f"💀 {setting}={value} is outside valid range [{min_val}, {max_val}]")
                 except ValueError:
-                    errors.append(f"❌ {setting}='{value_str}' is not a valid number")
+                    errors.append(f"💀 {setting}='{value_str}' is not a valid number")
 
         return errors
 
@@ -204,32 +204,32 @@ class EnvironmentValidator:
 
         if auth_mode == "jwt":
             if not os.getenv("JWT_TOKEN"):
-                errors.append("❌ AUTH_MODE=jwt requires JWT_TOKEN")
+                errors.append("💀 AUTH_MODE=jwt requires JWT_TOKEN")
 
         elif auth_mode == "login":
             required_vars = ["LOGIN_URL", "LOGIN_USER", "LOGIN_PASS"]
             for var in required_vars:
                 if not os.getenv(var):
-                    errors.append(f"❌ AUTH_MODE=login requires {var}")
+                    errors.append(f"💀 AUTH_MODE=login requires {var}")
 
         elif auth_mode == "apikey":
             if not os.getenv("API_KEY"):
-                errors.append("❌ AUTH_MODE=apikey requires API_KEY")
+                errors.append("💀 AUTH_MODE=apikey requires API_KEY")
 
         elif auth_mode == "basic":
             basic_user = os.getenv("BASIC_USER") or os.getenv("LOGIN_USER")
             basic_pass = os.getenv("BASIC_PASS") or os.getenv("LOGIN_PASS")
             if not basic_user or not basic_pass:
-                errors.append("❌ AUTH_MODE=basic requires BASIC_USER and BASIC_PASS (or LOGIN_USER and LOGIN_PASS)")
+                errors.append("💀 AUTH_MODE=basic requires BASIC_USER and BASIC_PASS (or LOGIN_USER and LOGIN_PASS)")
 
         elif auth_mode == "oauth":
             required_vars = ["OAUTH_CLIENT_ID", "OAUTH_CLIENT_SECRET", "OAUTH_TOKEN_URL"]
             for var in required_vars:
                 if not os.getenv(var):
-                    errors.append(f"❌ AUTH_MODE=oauth requires {var}")
+                    errors.append(f"💀 AUTH_MODE=oauth requires {var}")
 
         elif auth_mode not in ["", "none"]:
-            errors.append(f"❌ Unknown AUTH_MODE: {auth_mode}. Valid options: jwt, login, apikey, basic, oauth")
+            errors.append(f"💀 Unknown AUTH_MODE: {auth_mode}. Valid options: jwt, login, apikey, basic, oauth")
 
         return errors
 
@@ -287,10 +287,10 @@ class EndpointHealthChecker:
             print(f"✅ Base URL accessible (HTTP {response.status_code})")
             return True
         except requests.exceptions.ConnectionError:
-            print(f"❌ Cannot connect to {self.base_url}")
+            print(f"💀 Cannot connect to {self.base_url}")
             return False
         except requests.exceptions.Timeout:
-            print(f"❌ Timeout connecting to {self.base_url}")
+            print(f"💀 Timeout connecting to {self.base_url}")
             return False
         except Exception as e:
             print(f"⚠️  Connection check failed: {e}")
@@ -360,19 +360,19 @@ class EndpointHealthChecker:
                 else:
                     error = f"HTTP {response.status_code}"
                     results["errors"].append(f"{method} {path}: {error}")
-                    print(f"   ❌ {method} {path} → {error}")
+                    print(f"   💀 {method} {path} → {error}")
 
             except requests.exceptions.Timeout:
                 results["checked"] += 1
                 error = "Timeout"
                 results["errors"].append(f"{endpoint['method']} {endpoint['path']}: {error}")
-                print(f"   ❌ {endpoint['method']} {endpoint['path']} → {error}")
+                print(f"   💀 {endpoint['method']} {endpoint['path']} → {error}")
 
             except Exception as e:
                 results["checked"] += 1
                 error = str(e)[:50]
                 results["errors"].append(f"{endpoint['method']} {endpoint['path']}: {error}")
-                print(f"   ❌ {endpoint['method']} {endpoint['path']} → {error}")
+                print(f"   💀 {endpoint['method']} {endpoint['path']} → {error}")
 
         # Summary
         if results["checked"] > 0:

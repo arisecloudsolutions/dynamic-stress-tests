@@ -215,10 +215,10 @@ The framework validates all parameters before starting tests:
 When validation fails, the framework provides specific error messages:
 
 ```
-❌ Configuration Error: Either OPENAPI_URL or OPENAPI_PATH must be provided
-❌ AUTH_MODE=jwt requires JWT_TOKEN environment variable
-❌ MAX_USERS=abc is not a valid number
-❌ BASE_URL must start with http:// or https://
+💀 Configuration Error: Either OPENAPI_URL or OPENAPI_PATH must be provided
+💀 AUTH_MODE=jwt requires JWT_TOKEN environment variable
+💀 MAX_USERS=abc is not a valid number
+💀 BASE_URL must start with http:// or https://
 ```
 
 ## Parameter Precedence

@@ -45,13 +45,13 @@ class QuickStart:
                 print("👋 Happy load testing!")
                 break
             else:
-                print("❌ Invalid choice. Please try again.")
+                print("💀 Invalid choice. Please try again.")
 
             input("\nPress Enter to continue...")
 
     def _print_banner(self):
         """Print welcome banner."""
-        print("🚀 DYNAMIC STRESS TESTING FRAMEWORK")
+        print(" DYNAMIC STRESS TESTING FRAMEWORK")
         print("=" * 50)
         print("Welcome! This tool helps you:")
         print("  ✅ Test APIs automatically from OpenAPI specs")
@@ -69,7 +69,7 @@ class QuickStart:
             subprocess.run(['docker', '--version'], capture_output=True, check=True)
             print("  ✅ Docker is installed")
         except (subprocess.CalledProcessError, FileNotFoundError):
-            print("  ❌ Docker is not installed")
+            print("  💀 Docker is not installed")
             print("     Please install Docker Desktop: https://docker.com/get-started")
             return False
 
@@ -85,14 +85,14 @@ class QuickStart:
                 continue
 
         if not compose_working:
-            print("  ❌ Docker Compose is not working")
+            print("  💀 Docker Compose is not working")
             return False
 
         # Check Python
         if sys.version_info >= (3, 7):
             print(f"  ✅ Python {sys.version_info.major}.{sys.version_info.minor}")
         else:
-            print(f"  ❌ Python {sys.version_info.major}.{sys.version_info.minor} (need 3.7+)")
+            print(f"  💀 Python {sys.version_info.major}.{sys.version_info.minor} (need 3.7+)")
             return False
 
         return True
@@ -125,7 +125,7 @@ class QuickStart:
             shutil.copy2(self.examples_dir / ".env.petstore", ".env")
             print("   ✅ Copied petstore configuration to .env")
         except Exception as e:
-            print(f"   ❌ Failed to copy config: {e}")
+            print(f"   💀 Failed to copy config: {e}")
             return
 
         # Quick endpoint analysis
@@ -157,7 +157,7 @@ class QuickStart:
         print("   - Generate real-time statistics")
         print("   - Create detailed HTML reports")
 
-        choice = input("\n🚀 Start load test now? (y/N): ").lower()
+        choice = input("\n Start load test now? (y/N): ").lower()
         if choice == 'y':
             self._run_load_test()
         else:
@@ -175,12 +175,12 @@ class QuickStart:
 
         openapi_url = input("\n📋 OpenAPI spec URL (e.g., https://api.example.com/openapi.json): ").strip()
         if not openapi_url:
-            print("❌ OpenAPI URL is required")
+            print("💀 OpenAPI URL is required")
             return
 
         base_url = input("🌐 API base URL (e.g., https://api.example.com): ").strip()
         if not base_url:
-            print("❌ Base URL is required")
+            print("💀 Base URL is required")
             return
 
         # Authentication
@@ -269,7 +269,7 @@ class QuickStart:
             if "System ready" in result.stdout:
                 print("✅ Configuration looks good!")
 
-                choice = input("\n🚀 Run endpoint analysis? (Y/n): ").lower()
+                choice = input("\n Run endpoint analysis? (Y/n): ").lower()
                 if choice != 'n':
                     subprocess.run([sys.executable, "endpoint_visualizer.py", "--no-health-check"])
 
@@ -278,7 +278,7 @@ class QuickStart:
                 print("Run: python3 scenarios/troubleshoot.py")
 
         except Exception as e:
-            print(f"❌ Failed to save configuration: {e}")
+            print(f"💀 Failed to save configuration: {e}")
 
     def _run_local_mock_server(self):
         """Setup and run local mock server."""
@@ -292,14 +292,14 @@ class QuickStart:
             import flask
             print("✅ Flask is available")
         except ImportError:
-            print("❌ Flask not installed")
+            print("💀 Flask not installed")
             choice = input("Install Flask now? (Y/n): ").lower()
             if choice != 'n':
                 try:
                     subprocess.run([sys.executable, "-m", "pip", "install", "flask"], check=True)
                     print("✅ Flask installed")
                 except subprocess.CalledProcessError:
-                    print("❌ Failed to install Flask")
+                    print("💀 Failed to install Flask")
                     return
 
         print("\n📋 Mock server provides:")
@@ -308,7 +308,7 @@ class QuickStart:
         print("   - Realistic response times")
         print("   - Error simulation (5% rate)")
 
-        choice = input("\n🚀 Start mock server? (Y/n): ").lower()
+        choice = input("\n Start mock server? (Y/n): ").lower()
         if choice == 'n':
             return
 
@@ -317,7 +317,7 @@ class QuickStart:
             shutil.copy2(self.examples_dir / ".env.mock_server", ".env")
             print("✅ Mock server configuration copied")
         except Exception as e:
-            print(f"❌ Failed to copy config: {e}")
+            print(f"💀 Failed to copy config: {e}")
             return
 
         print("\n🖥️  Starting mock server...")
@@ -472,7 +472,7 @@ class QuickStart:
 
     def _run_load_test(self):
         """Run a load test."""
-        print("\n🚀 STARTING LOAD TEST")
+        print("\n STARTING LOAD TEST")
         print("-" * 25)
         print("This will run for 2 minutes with 10 concurrent users")
 
@@ -499,7 +499,7 @@ class QuickStart:
         except KeyboardInterrupt:
             print("\n🛑 Load test interrupted")
         except Exception as e:
-            print(f"❌ Load test failed: {e}")
+            print(f"💀 Load test failed: {e}")
 
 
 def main():

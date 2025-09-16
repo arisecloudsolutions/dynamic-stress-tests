@@ -1,6 +1,6 @@
 # Developer Guide - Dynamic Stress Testing Framework
 
-## 🚀 Quick Start for Developers
+##  Quick Start for Developers
 
 ### 1. Get Started in 30 Seconds
 
@@ -371,7 +371,7 @@ python3 endpoint_visualizer.py --no-health-check
 - **Error Rate**: Percentage of failed requests
 - **Concurrent Users**: Active load on system
 
-## 🚀 CI/CD Integration
+##  CI/CD Integration
 
 ### GitHub Actions Example
 ```yaml

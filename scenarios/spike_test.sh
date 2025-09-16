@@ -2,14 +2,14 @@
 # Spike Test Scenario
 # Simulates sudden traffic spikes to test system resilience
 
-echo "🚀 SPIKE TEST SCENARIO"
-echo "Simulating sudden traffic spike..."
-echo "This tests how your API handles sudden load increases"
+echo "   SPIKE TEST SCENARIO"
+echo "   Simulating sudden traffic spike..."
+echo "   This tests how your API handles sudden load increases"
 echo
 
 # Ensure we have the basic config
 if [ ! -f .env ]; then
-    echo "❌ No .env file found. Copy from examples/ first:"
+    echo "💀 No .env file found. Copy from examples/ first:"
     echo "   cp examples/.env.petstore .env"
     exit 1
 fi
@@ -22,7 +22,7 @@ SPIKE_USERS=${SPIKE_USERS:-100}
 SPIKE_RATE=${SPIKE_RATE:-50}
 SPIKE_DURATION=${SPIKE_DURATION:-2m}
 
-echo "📊 Spike Test Configuration:"
+echo "   Spike Test Configuration:"
 echo "   Target Users: $SPIKE_USERS"
 echo "   Spawn Rate: $SPIKE_RATE users/second"
 echo "   Duration: $SPIKE_DURATION"
