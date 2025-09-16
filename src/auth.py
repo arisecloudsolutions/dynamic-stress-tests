@@ -5,6 +5,9 @@ from typing import Dict, Optional, Any
 from urllib.parse import urljoin
 import time
 
+from .logger import get_logger, log_auth_success, log_auth_failure, log_config_loaded
+from .exceptions import AuthenticationError, ConfigurationError, NetworkError
+
 class AuthenticationManager:
     """
     Handles various authentication methods for API testing.
@@ -12,11 +15,13 @@ class AuthenticationManager:
     """
 
     def __init__(self):
+        self.logger = get_logger(__name__)
         self.cached_token: Optional[str] = None
         self.token_expires_at: Optional[float] = None
         self.extra_headers: Dict[str, str] = {}
         self.auth_mode = os.getenv("AUTH_MODE", "").lower()
         self._load_extra_headers()
+        self.logger.debug(f"AuthenticationManager initialized with mode: {self.auth_mode}")
 
     def get_auth_headers(self) -> Dict[str, str]:
         """

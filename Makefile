@@ -1,6 +1,6 @@
-# Dynamic Stress Testing Framework - Simplified Makefile
+# Dynamic Stress Testing Framework - Enhanced Makefile
 
-.PHONY: help demo test setup clean
+.PHONY: help demo test setup clean validate dev-test
 
 # Default target
 help:
@@ -12,15 +12,19 @@ help:
 	@echo "  make test     - Run framework tests"
 	@echo "  make setup    - Copy example config"
 	@echo "  make clean    - Clean up everything"
+	@echo "  make validate - Validate configuration"
 	@echo ""
 	@echo "Development:"
 	@echo "  make mock     - Start local mock server"
 	@echo "  make health   - Check system health"
+	@echo "  make dev-test - Run Python tests locally"
+	@echo "  make analyze  - Analyze OpenAPI spec"
 	@echo ""
 	@echo "Usage:"
 	@echo "  1. make setup"
 	@echo "  2. Edit .env file"
-	@echo "  3. make demo"
+	@echo "  3. make validate"
+	@echo "  4. make demo"
 
 # Quick demo - works out of the box
 demo:
@@ -30,9 +34,24 @@ demo:
 
 # Run tests
 test:
-	@echo "Running tests..."
+	@echo "Running framework tests..."
 	@docker compose build
-	@docker compose run --rm locust python3 test_framework.py --comprehensive
+	@docker compose run --rm locust python3 src/test_framework.py --comprehensive
+
+# Validate configuration
+validate:
+	@echo "Validating configuration..."
+	@docker compose run --rm locust python3 src/config_validator.py
+
+# Run Python tests locally (development)
+dev-test:
+	@echo "Running Python tests..."
+	@python3 -m pytest tests/ -v
+
+# Analyze OpenAPI specification
+analyze:
+	@echo "Analyzing OpenAPI specification..."
+	@docker compose run --rm locust python3 src/endpoint_visualizer.py
 
 # Setup config file
 setup:
@@ -57,7 +76,7 @@ mock:
 # Quick health check
 health:
 	@echo "Health check..."
-	@docker compose run --rm locust python3 scenarios/troubleshoot.py --quick
+	@docker compose run --rm locust python3 src/config_validator.py --health
 
 # Build only (no run)
 build:

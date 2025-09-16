@@ -10,12 +10,44 @@ git clone <repo-url>
 cd dynamic-stress-tests
 
 # Quick demo with public API
-python3 quick_start.py
+python3 src/quick_start.py
 
 # Or copy example config and run
 cp examples/.env.petstore .env
 docker compose up --build
 # Open http://localhost:8089
+```
+
+## 🏗️ Project Structure
+
+```
+dynamic-stress-tests/
+├── src/                     # Source code
+│   ├── __init__.py         # Package initialization
+│   ├── auth.py             # Authentication manager
+│   ├── config_validator.py # Configuration validation
+│   ├── debug_utils.py      # Development utilities
+│   ├── exceptions.py       # Custom exceptions
+│   ├── locustfile.py       # Main Locust test file
+│   ├── logger.py           # Logging configuration
+│   ├── openapi_loader.py   # OpenAPI spec loading
+│   ├── scenario_builder.py # Test scenario generation
+│   ├── settings.py         # Framework settings
+│   └── utils.py            # Utility functions
+├── tests/                  # Test suite
+│   ├── __init__.py
+│   ├── conftest.py         # Pytest configuration
+│   ├── test_auth.py        # Authentication tests
+│   └── test_config_validator.py # Configuration tests
+├── doc/                    # Documentation
+│   ├── CLAUDE.md           # Project requirements
+│   ├── DEVELOPER_GUIDE.md  # This file
+│   └── PARAMETERS.md       # Parameter documentation
+├── examples/               # Example configurations
+├── reports/                # Generated reports
+├── Dockerfile              # Docker configuration
+├── docker-compose.yml      # Container orchestration
+└── Makefile               # Development commands
 ```
 
 ### 2. Test Your Own API
@@ -111,7 +143,7 @@ unset SPEC_INCLUDE_TAGS
 unset SPEC_EXCLUDE_TAGS
 
 # Or analyze first
-python3 endpoint_visualizer.py --no-health-check
+python3 src/endpoint_visualizer.py --no-health-check
 ```
 
 ### Problem: "Docker issues"
@@ -466,7 +498,163 @@ Check `scenarios/troubleshoot.py` for automated diagnosis of:
 
 ### Resources
 - 📖 Framework documentation: `README.md`
-- 🔧 Troubleshooting tool: `scenarios/troubleshoot.py`
-- 📊 Endpoint analyzer: `endpoint_visualizer.py`
-- 🧪 Test suite: `test_framework.py`
+- 🔧 Configuration validator: `src/config_validator.py`
+- 🐛 Debug utilities: `src/debug_utils.py`
+- 📊 Endpoint analyzer: `src/endpoint_visualizer.py`
+- 🧪 Test suite: `tests/`
 - 🖥️ Mock server: `tests/mock_api_server.py`
+
+---
+
+## 🛠️ Advanced Development Features
+
+### Configuration Validation
+
+The framework includes comprehensive configuration validation:
+
+```bash
+# Validate current configuration
+make validate
+
+# Or run directly
+python3 src/config_validator.py
+
+# Run health check
+python3 src/config_validator.py --health
+```
+
+**Features:**
+- ✅ Environment variable validation
+- ✅ URL format checking
+- ✅ Authentication configuration validation
+- ✅ Safety limit warnings
+- ✅ Network connectivity testing
+- ✅ OpenAPI spec accessibility checking
+
+### Interactive Debugging
+
+For troubleshooting and development, use the interactive debug utility:
+
+```bash
+# Interactive debugging session
+python3 src/debug_utils.py --interactive
+
+# Quick debug check
+python3 src/debug_utils.py --quick
+```
+
+**Debug capabilities:**
+- 🔧 Configuration analysis
+- 🔐 Authentication testing
+- 📋 OpenAPI spec inspection
+- 🎯 Scenario generation testing
+- 🌐 Network connectivity checking
+- 🧪 Single endpoint testing
+- 💾 Debug info export
+
+### Development Testing
+
+Run the comprehensive test suite:
+
+```bash
+# Run all tests locally
+make dev-test
+
+# Run specific test file
+python3 -m pytest tests/test_auth.py -v
+
+# Run with coverage
+python3 -m pytest tests/ --cov=src --cov-report=html
+```
+
+### Error Handling and Logging
+
+The framework includes structured error handling:
+
+```python
+from src.exceptions import (
+    AuthenticationError,
+    ConfigurationError,
+    OpenAPIError
+)
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
+try:
+    # Your code here
+    pass
+except AuthenticationError as e:
+    logger.error(f"Authentication failed: {e}")
+except ConfigurationError as e:
+    logger.error(f"Configuration error: {e}")
+```
+
+**Log levels available:**
+- `DEBUG`: Detailed debugging information
+- `INFO`: General information messages
+- `WARNING`: Warning messages
+- `ERROR`: Error messages
+- `CRITICAL`: Critical error messages
+
+### Custom Extensions
+
+The framework is designed to be extensible:
+
+```python
+# Custom authentication method
+from src.auth import AuthenticationManager
+
+class CustomAuthManager(AuthenticationManager):
+    def get_custom_headers(self):
+        # Your custom logic here
+        return {"Custom-Header": "value"}
+
+# Custom scenario builder
+from src.scenario_builder import ScenarioBuilder
+
+class CustomScenarioBuilder(ScenarioBuilder):
+    def build_custom_scenarios(self, spec):
+        # Your custom scenario logic
+        return custom_scenarios
+```
+
+### Package Structure
+
+The `src/` directory is organized as a proper Python package:
+
+```python
+# Import framework components
+from src import auth, openapi_loader, scenario_builder
+from src.logger import get_logger
+from src.config_validator import validate_config
+from src.debug_utils import quick_debug
+
+# Use in your own code
+logger = get_logger(__name__)
+auth_manager = auth.AuthenticationManager()
+```
+
+### Make Commands Reference
+
+```bash
+# Core commands
+make help          # Show all available commands
+make demo          # Run demo with Swagger Petstore
+make test          # Run framework tests
+make validate      # Validate configuration
+make setup         # Copy example configuration
+
+# Development commands
+make dev-test      # Run Python tests locally
+make analyze       # Analyze OpenAPI specification
+make mock          # Start local mock API server
+make health        # Run health check
+make build         # Build Docker images
+make clean         # Clean up everything
+make logs          # Show container logs
+```
+
+---
+
+*🎯 This framework is designed to be production-ready while maintaining developer-friendly features for testing, debugging, and extension.*
