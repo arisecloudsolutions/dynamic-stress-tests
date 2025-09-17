@@ -1,12 +1,65 @@
-# Dynamic Stress Tests - Automated Load Testing from OpenAPI Specs and Locust
+# Dynamic Stress Tests - Automatic Load Testing from OpenAPI
+
 <p align="center">
      <a href="https://locust.io/" target="_blank" rel="noopener noreferrer">
           <img src="https://img.shields.io/badge/Built%20with-Locust-43B02A?logo=locust&logoColor=white" alt="Locust" />
      </a>
+     <a href="https://swagger.io/specification/" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/OpenAPI-3.0-85EA2D?logo=openapiinitiative&logoColor=white" alt="OpenAPI 3.0" />
+     </a>
 </p>
 
+**Automatically generate comprehensive load tests from your OpenAPI/Swagger specification.**
 
-Production-ready automated load testing framework that generates comprehensive tests from OpenAPI specifications with built-in safety features, validation, and debugging tools.
+Transform your API documentation into production-ready load tests in minutes. This tool reads your OpenAPI spec and creates realistic test scenarios for every endpoint, including automatic authentication for protected routes.
+
+## What It Does
+
+🎯 **Automatic Test Generation**: Scans your OpenAPI spec and creates load tests for all endpoints
+🔐 **Smart Authentication**: Automatically handles JWT, API keys, OAuth, and login flows
+📊 **Real-time Monitoring**: Live dashboard with performance metrics and insights
+🛡️ **Production Safe**: Built-in safety controls and gradual scaling
+🐳 **Docker Ready**: Complete containerization with zero setup complexity
+
+## How Automatic Authentication Works
+
+The framework intelligently handles authentication for protected endpoints by:
+
+### 1. **Authentication Detection**
+```bash
+OpenAPI Spec Analysis → Security Schemes Detection → Endpoint Protection Mapping
+```
+
+### 2. **Automatic Token Generation**
+Based on your `.env` configuration, the tool:
+- **JWT**: Uses provided token directly or refreshes it automatically
+- **API Key**: Injects key into headers/query parameters as specified
+- **OAuth**: Handles token exchange and refresh flows
+- **Login Flow**: Performs login request and extracts session/token
+
+### 3. **Smart Request Enhancement**
+```bash
+Endpoint Request → Authentication Check → Token Injection → Load Test Execution
+```
+
+### Example Authentication Flow
+```env
+# Your .env configuration
+AUTH_MODE=login
+LOGIN_URL=/auth/login
+LOGIN_USER=test@example.com
+LOGIN_PASS=password
+BASE_URL=https://your-api.com
+OPENAPI_URL=https://your-api.com/swagger.json
+```
+
+**What happens automatically:**
+1. Tool reads OpenAPI spec from `OPENAPI_URL`
+2. Identifies protected endpoints (those with security requirements)
+3. Performs login at `LOGIN_URL` with credentials
+4. Extracts authentication token from response
+5. Applies token to all subsequent requests to protected endpoints
+6. Generates load tests for ALL endpoints (protected + public)
 
 ## Core Concept
 
@@ -23,19 +76,13 @@ Documentation    Realistic            Performance    Actionable
 Synchronization  Scenarios            Metrics        Insights
 ```
 
-## Key Features
-
-- **Auto-generates tests** from OpenAPI/Swagger specifications
-- **Multiple authentication methods** (JWT, API keys, OAuth, Basic Auth)
-- **Production-safe defaults** with comprehensive validation
-- **Real-time monitoring** with web-based dashboard
-- **Interactive debugging** and troubleshooting tools
-- **Extensive test coverage** with automated scenario generation
-- **Container-ready** with complete Docker orchestration
-- **CI/CD integration** with detailed reporting
-
 ## Quick Start
 
+### Prerequisites
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- OpenAPI/Swagger specification URL
+
+### Simple 3-Step Setup
 ```bash
 make setup
 # Edit .env with your API details
@@ -45,42 +92,72 @@ make demo
 
 Open http://localhost:8089 to access the real-time testing dashboard.
 
+### Example Configuration
+```env
+# Basic API configuration
+OPENAPI_URL=https://your-api.com/openapi.json
+BASE_URL=https://your-api.com
+MAX_USERS=10
+SPAWN_RATE=2
+
+# Authentication (choose one method)
+AUTH_MODE=none                    # For public APIs
+# AUTH_MODE=jwt                   # For JWT token auth
+# AUTH_MODE=apikey               # For API key auth
+# AUTH_MODE=login                # For username/password login
+```
+
 ## Documentation
 
+### English Documentation
 - **[Command Reference](doc/COMMANDS.md)** - Detailed command documentation with procedures and testing flows
 - **[API Testing Guide](doc/API_TESTING.md)** - Complete testing methodology and dynamic test generation
 - **[CI/CD Integration](doc/CICD.md)** - Production deployment with AWS Fargate examples
 - **[Parameters Reference](doc/PARAMETERS.md)** - Complete configuration guide
 - **[Developer Guide](doc/DEVELOPER_GUIDE.md)** - Advanced development features
 
-## Configuration
+### Documentação em Português (Brasil)
+- **[Referência de Comandos](doc/pt-br/COMMANDS_pt-BR.md)** - Documentação detalhada de comandos
+- **[Guia de Testes de API](doc/pt-br/API_TESTING_pt-BR.md)** - Metodologia completa de testes
+- **[Integração CI/CD](doc/pt-br/CICD_pt-BR.md)** - Deploy em produção com exemplos AWS Fargate
+- **[Referência de Parâmetros](doc/pt-br/PARAMETERS_pt-BR.md)** - Guia completo de configuração
+- **[Guia do Desenvolvedor](doc/pt-br/DEVELOPER_GUIDE_pt-BR.md)** - Recursos avançados de desenvolvimento
 
-Basic setup requires minimal configuration:
+## Authentication Examples
 
+## Authentication Examples
+
+### JWT Token Authentication
 ```env
-OPENAPI_URL=https://your-api.com/openapi.json
-BASE_URL=https://your-api.com
-AUTH_MODE=none
-MAX_USERS=10
-SPAWN_RATE=2
+AUTH_MODE=jwt
+JWT_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-Authentication examples:
+### API Key Authentication
 ```env
-# JWT Token
-AUTH_MODE=jwt
-JWT_TOKEN=your.jwt.token.here
-
-# API Key
 AUTH_MODE=apikey
-API_KEY=your-api-key
+API_KEY=your-secret-api-key-here
+API_KEY_HEADER=X-API-Key  # Optional: custom header name
+```
 
-# Username/Password
+### Username/Password Login Flow
+```env
 AUTH_MODE=login
 LOGIN_URL=/auth/login
-LOGIN_USER=user@example.com
-LOGIN_PASS=password
+LOGIN_USER=test@example.com
+LOGIN_PASS=your-password
 ```
+
+## Key Features
+
+- **🔄 Auto-generates tests** from OpenAPI/Swagger specifications
+- **🔐 Smart authentication** for JWT, API keys, OAuth, and login flows
+- **🛡️ Production-safe defaults** with comprehensive validation
+- **📊 Real-time monitoring** with web-based dashboard
+- **🐛 Interactive debugging** and troubleshooting tools
+- **📈 Extensive test coverage** with automated scenario generation
+- **🐳 Container-ready** with complete Docker orchestration
+- **⚙️ CI/CD integration** with detailed reporting
 
 ## Safety Features
 

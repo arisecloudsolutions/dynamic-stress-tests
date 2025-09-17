@@ -8,7 +8,7 @@ services:
     ports:
       - "8089:8089"
     volumes:
-      - ./reports:/mnt/locust/reports
-      - ./specs:/mnt/locust/specs
-      - ./src:/mnt/locust
+      - ./reports:/mnt/locust/reports:rw
+      - ./specs:/mnt/locust/specs:ro
+      - ./src:/mnt/locust:ro
     restart: unless-stopped

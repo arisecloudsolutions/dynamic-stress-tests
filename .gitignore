@@ -1,43 +1,52 @@
 # Python
 __pycache__/
 src/__pycache__/
+tests/__pycache__/
 *.py[cod]
+*.pyc
+*.pyo
 *.egg
 *.egg-info/
 dist/
 build/
 .env
-.venv
+.env.*
+!.env.example
+!examples/.env.*
+.venv/
 env/
 venv/
 *.log
 .python-version
 
-# Locust Reports
-reports/
+# Locust Reports (generated at runtime)
+reports/*
+!reports/.gitkeep
 test_reports/
 *.csv
 *.html
+*.json
 
-# Docker
-.docker/
-
-# Node/Next.js
-node_modules/
-.next/
-out/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Docker volumes (runtime generated)
+src/reports/
+src/specs/
 
 # OS
 .DS_Store
 Thumbs.db
+*.swp
+*~
 
 # Editor
 .vscode/
 .idea/
-*.swp
+*.sublime-*
+*.vim
 
+# Documentation build
+doc/_build/
+*.pdf
+
+# Claude AI related
 .claude/
 CLAUDE.md
